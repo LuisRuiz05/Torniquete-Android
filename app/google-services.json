@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "685334448811",
+    "firebase_url": "https://practica03-64eac-default-rtdb.firebaseio.com",
+    "project_id": "practica03-64eac",
+    "storage_bucket": "practica03-64eac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:685334448811:android:71ee31f2d006062d7145ee",
+        "android_client_info": {
+          "package_name": "com.example.practica3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "685334448811-17p95hsb1aq0st0p9kvealn3atardhnl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHevZkBMP6rHcRbcRv7byfcJ2YbmyUMJw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "685334448811-17p95hsb1aq0st0p9kvealn3atardhnl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:685334448811:android:4173e0e31f8600a07145ee",
+        "android_client_info": {
+          "package_name": "com.example.practica5"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "685334448811-17p95hsb1aq0st0p9kvealn3atardhnl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHevZkBMP6rHcRbcRv7byfcJ2YbmyUMJw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "685334448811-17p95hsb1aq0st0p9kvealn3atardhnl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
