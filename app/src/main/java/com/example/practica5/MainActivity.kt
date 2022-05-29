@@ -21,6 +21,8 @@ import com.google.zxing.integration.android.IntentIntegrator
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
+    private val arrayList = ArrayList<Claves>()
+
     val database = Firebase.database
     val myRef = database.getReference("claves")
 
@@ -29,14 +31,22 @@ class MainActivity : AppCompatActivity() {
         //setContentView(R.layout.activity_main)
 
         //////////////////////////
-        /*myRef.addValueEventListener(object: ValueEventListener {
+        myRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                val value = snapshot.value
+                Log.d(TAG, "Value is: " + value)
                 snapshot.children.forEach() { hijo ->
+                    //Log.d(TAG,"hijo default: " + hijo.key)
+                    //Log.d(TAG,"hijo acual: " + myRef.child("-N2RKqYoq7wo8opZWQtq").toString())
 
+                    Log.d(TAG, (hijo.key == "-N2RKqYoq7wo8opZWQtq").toString())
                 }
             }
-        })*/
-        ////////////////////////
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.w(TAG, "Failed to read a value", error.toException())
+            }
+        })
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -74,12 +84,46 @@ class MainActivity : AppCompatActivity() {
             if (result.contents == null) {
                 Toast.makeText(this, "Cancelado", Toast.LENGTH_LONG).show()
             } else {
-                myRef.get()
-
                 binding.lectura.text = result.contents.toString()
+                myRef.addValueEventListener(object: ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val value = snapshot.value
+                        Log.d(TAG, "Value is: " + value)
+                        snapshot.children.forEach() { hijo ->
+                            var isAccepted = false
+                            var clave: Claves? = hijo.getValue(Claves::class.java)
+                            if (hijo.key == result.contents.toString()){
+                                if (clave != null) {
+                                    Log.d(TAG, "Clave servidor: " + hijo.key)
+                                    Log.d(TAG, "Clave escaneada: " + result.contents.toString())
+                                    Log.d(TAG, "Status: " + clave.status)
+                                    if (clave.status == "libre") {
+                                        myRef.child(result.contents.toString()).child("status").setValue("ocupado")
+                                        myRef.child(result.contents.toString()).child("usuario").setValue(auth.uid)
+                                        startActivity(Intent(this@MainActivity, Successful::class.java))
+                                        isAccepted = true
+                                        finish()
+                                    } else {
+                                        if(!isAccepted){
+                                            startActivity(Intent(this@MainActivity, Denied::class.java))
+                                            finish()
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        return
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        Log.w(TAG, "Failed to read a value", error.toException())
+                    }
+                })
+                return
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data)
         }
+        finish()
     }
 }

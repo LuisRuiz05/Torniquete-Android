@@ -20,13 +20,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Practica5">
         <activity
+            android:name=".Denied"
+            android:exported="false"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".Successful"
+            android:exported="false"
+            android:launchMode="singleInstance" />
+        <activity
             android:name=".MainActivity"
-            android:launchMode="singleInstance"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleInstance" />
         <activity
             android:name=".Login"
-            android:launchMode="singleInstance"
-            android:exported="true">
+            android:exported="true"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
