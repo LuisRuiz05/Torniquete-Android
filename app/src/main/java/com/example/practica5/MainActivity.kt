@@ -21,17 +21,15 @@ import com.google.zxing.integration.android.IntentIntegrator
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
-    private val arrayList = ArrayList<Claves>()
 
     val database = Firebase.database
     val myRef = database.getReference("claves")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_main)
 
         //////////////////////////
-        myRef.addValueEventListener(object: ValueEventListener {
+        /*myRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val value = snapshot.value
                 Log.d(TAG, "Value is: " + value)
@@ -46,7 +44,7 @@ class MainActivity : AppCompatActivity() {
             override fun onCancelled(error: DatabaseError) {
                 Log.w(TAG, "Failed to read a value", error.toException())
             }
-        })
+        })*/
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -78,6 +76,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data:
     Intent?) {
+        var isAccepted = false
         val result = IntentIntegrator.parseActivityResult(requestCode,
             resultCode, data)
         if (result != null) {
@@ -89,8 +88,8 @@ class MainActivity : AppCompatActivity() {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val value = snapshot.value
                         Log.d(TAG, "Value is: " + value)
+
                         snapshot.children.forEach() { hijo ->
-                            var isAccepted = false
                             var clave: Claves? = hijo.getValue(Claves::class.java)
                             if (hijo.key == result.contents.toString()){
                                 if (clave != null) {
@@ -103,16 +102,14 @@ class MainActivity : AppCompatActivity() {
                                         startActivity(Intent(this@MainActivity, Successful::class.java))
                                         isAccepted = true
                                         finish()
-                                    } else {
-                                        if(!isAccepted){
-                                            startActivity(Intent(this@MainActivity, Denied::class.java))
-                                            finish()
-                                        }
                                     }
                                 }
                             }
                         }
-                        return
+                        if(!isAccepted) {
+                            startActivity(Intent(this@MainActivity, Denied::class.java))
+                            finish()
+                        }
                     }
 
                     override fun onCancelled(error: DatabaseError) {
